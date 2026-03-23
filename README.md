@@ -64,9 +64,11 @@ claude mcp add crafty npx -y crafty-mcp \
 | Variable | Required | Description |
 |----------|----------|-------------|
 | `CRAFTY_URL` | Yes | Crafty Controller base URL (e.g. `https://localhost:8443`) |
-| `CRAFTY_API_TOKEN` | Yes | Bearer token from Crafty UI |
+| `CRAFTY_API_TOKEN` | No* | Bearer token from Crafty UI |
 | `CRAFTY_ALLOW_INSECURE` | No | Set to `true` to allow self-signed certificates (Crafty's default) |
 | `CRAFTY_TIMEOUT` | No | Request timeout in milliseconds (default: `30000`) |
+
+> *`CRAFTY_API_TOKEN` is optional if you authenticate dynamically using the `crafty_login` tool, but recommended for most setups.
 
 ## Getting your API token
 
