@@ -1,0 +1,31 @@
+stages:
+  - build
+  - publish
+
+build:
+  stage: build
+  image: node:20
+  script:
+    - npm ci
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+    expire_in: 1 hour
+  only:
+    - main
+    - tags
+    - merge_requests
+
+publish:
+  stage: publish
+  image: node:20
+  only:
+    - tags
+  script:
+    - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+    - npm ci
+    - npm run build
+    - npm publish --access public
+  environment:
+    name: npm
