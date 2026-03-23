@@ -6,6 +6,8 @@ An MCP (Model Context Protocol) server for [Crafty Controller 4](https://craftyc
 
 > The first MCP server for Crafty Controller.
 
+[![crafty-mcp MCP server](https://glama.ai/mcp/servers/HadiCherkaoui/crafty-mcp/badges/card.svg)](https://glama.ai/mcp/servers/HadiCherkaoui/crafty-mcp)
+
 ## What it does
 
 `crafty-mcp` exposes the full Crafty Controller 4 API V2 as MCP tools, letting AI assistants like Claude manage your Minecraft servers using natural language. Start and stop servers, send console commands, manage players, edit server files, configure backups, set up scheduled tasks, manage webhooks, and administer users — all without leaving your AI chat.
