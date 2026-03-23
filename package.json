@@ -2,12 +2,12 @@
   "name": "crafty-mcp",
   "version": "0.1.0",
   "description": "MCP server for Crafty Controller 4 — manage Minecraft servers via AI assistants",
-  "main": "dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsc --watch"
+    "dev": "tsc --watch",
+    "prepublishOnly": "tsc"
   },
   "keywords": [
     "mcp",
@@ -17,10 +17,9 @@
     "crafty-controller",
     "model-context-protocol"
   ],
-  "author": "",
+  "author": "Hadi Cherkaoui",
   "license": "MIT",
   "type": "module",
-  "types": "dist/index.d.ts",
   "bin": {
     "crafty-mcp": "./dist/index.js"
   },
@@ -32,7 +31,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://gitlab.cherkaoui.ch/HadiCherkaoui/crafty-mcp.git"
+    "url": "https://github.com/HadiCherkaoui/crafty-mcp.git"
   },
   "homepage": "https://github.com/HadiCherkaoui/crafty-mcp",
   "dependencies": {
