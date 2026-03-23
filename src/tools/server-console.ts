@@ -12,7 +12,7 @@ export function registerServerConsoleTools(server: McpServer, client: CraftyClie
     },
     async ({ server_id, command }) => {
       try {
-        const data = await client.post(`/servers/${server_id}/stdin`, command);
+        const data = await client.post(`/servers/${server_id}/stdin`, { command });
         return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
       } catch (error) {
         const msg = error instanceof Error ? error.message : String(error);
