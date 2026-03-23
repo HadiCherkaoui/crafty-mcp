@@ -1,7 +1,57 @@
 stages:
+  - test
   - build
   - publish
 
+# ── Unit tests (fast, no Docker) ──────────────────────────────────
+test-unit:
+  stage: test
+  image: node:20
+  script:
+    - npm ci
+    - npm test
+  coverage: '/Lines\s*:\s*(\d+\.?\d*)%/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+    expire_in: 1 week
+  only:
+    - main
+    - merge_requests
+    - tags
+
+# ── Integration tests (Docker-in-Docker) ──────────────────────────
+test-integration:
+  stage: test
+  image: docker:27
+  services:
+    - docker:27-dind
+  variables:
+    DOCKER_HOST: tcp://docker:2376
+    DOCKER_TLS_CERTDIR: /certs
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: /certs/client
+  before_script:
+    - apk add --no-cache nodejs npm
+    - npm ci
+  script:
+    - npm run test:integration
+  after_script:
+    - docker compose -f tests/docker-compose.test.yml down -v 2>/dev/null || true
+  artifacts:
+    when: on_failure
+    paths:
+      - tests/docker/logs/
+    expire_in: 3 days
+  only:
+    - main
+    - merge_requests
+    - tags
+  allow_failure: false
+
+# ── Build (TypeScript compile) ─────────────────────────────────────
 build:
   stage: build
   image: node:20
@@ -17,6 +67,7 @@ build:
     - tags
     - merge_requests
 
+# ── Publish to npm on tag ──────────────────────────────────────────
 publish:
   stage: publish
   image: node:20
