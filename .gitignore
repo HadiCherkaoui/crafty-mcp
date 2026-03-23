@@ -4,5 +4,5 @@ dist/
 *.tgz
 .worktrees/
 .test-session.json
-docker/
+tests/docker/
 coverage/

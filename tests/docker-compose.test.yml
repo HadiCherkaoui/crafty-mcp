@@ -1,0 +1,15 @@
+services:
+  crafty:
+    image: registry.gitlab.com/crafty-controller/crafty-4:latest
+    container_name: crafty_test
+    environment:
+      - TZ=Etc/UTC
+    ports:
+      - "8444:8443"
+    volumes:
+      - ./docker/config:/crafty/app/config
+      - ./docker/logs:/crafty/logs
+      - ./docker/servers:/crafty/servers
+      - ./docker/backups:/crafty/backups
+      - ./docker/import:/crafty/import
+    restart: "no"
