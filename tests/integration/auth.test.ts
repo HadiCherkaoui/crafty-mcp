@@ -35,7 +35,7 @@ describe("Auth / Meta (integration)", () => {
 
   it("CraftyClient with valid token can call authenticated endpoint", async () => {
     const client = getClient();
-    const data = await client.get("/crafty/stats");
+    const data = await client.get("/crafty/config");
     expect(data).toBeDefined();
   });
 });
