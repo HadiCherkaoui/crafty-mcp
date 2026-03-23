@@ -1,6 +1,6 @@
 {
   "name": "crafty-mcp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "MCP server for Crafty Controller 4 — manage Minecraft servers via AI assistants",
   "scripts": {
     "test": "vitest run",
