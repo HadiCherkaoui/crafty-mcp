@@ -96,7 +96,7 @@ export function registerServerTools(server: McpServer, client: CraftyClient): vo
     "Update a Minecraft server's configuration (name, ports, auto-start, crash detection, stop command, etc.)",
     {
       server_id: z.string().describe("Server ID or UUID"),
-      updates: z.record(z.unknown()).describe("Configuration fields to update"),
+      updates: z.record(z.string(), z.unknown()).describe("Configuration fields to update"),
     },
     async ({ server_id, updates }) => {
       try {

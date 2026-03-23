@@ -37,7 +37,7 @@ export function registerCraftyTools(server: McpServer, client: CraftyClient): vo
     "crafty_update_config",
     "Update Crafty Controller panel configuration settings",
     {
-      config: z.record(z.unknown()).describe("Configuration key-value pairs to update"),
+      config: z.record(z.string(), z.unknown()).describe("Configuration key-value pairs to update"),
     },
     async ({ config }) => {
       try {
