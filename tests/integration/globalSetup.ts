@@ -2,12 +2,12 @@ import { execSync } from "child_process";
 import { readFileSync, existsSync, mkdirSync, writeFileSync } from "fs";
 import { join } from "path";
 
-const CRAFTY_URL = "https://localhost:8444";
+const CRAFTY_URL = process.env["CRAFTY_TEST_URL"] ?? "https://localhost:8444";
 const CONFIG_DIR = join("tests", "docker", "config");
 const CREDS_FILE = join(CONFIG_DIR, "default-creds.txt");
 const SESSION_FILE = ".test-session.json";
 const COMPOSE_FILE = "tests/docker-compose.test.yml";
-const MAX_WAIT_MS = 90_000;
+const MAX_WAIT_MS = 120_000;
 const POLL_INTERVAL_MS = 2_000;
 
 async function waitForCrafty(): Promise<void> {

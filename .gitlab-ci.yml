@@ -34,6 +34,7 @@ test-integration:
     DOCKER_HOST: tcp://docker:2375
     DOCKER_TLS_CERTDIR: ""
     DOCKER_BUILDKIT: "1"
+    CRAFTY_TEST_URL: "https://docker:8444"
   before_script:
     - apk add --no-cache nodejs npm
     - npm ci
