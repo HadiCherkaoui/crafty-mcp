@@ -25,14 +25,15 @@ test-unit:
 # ── Integration tests (Docker-in-Docker) ──────────────────────────
 test-integration:
   stage: test
-  image: docker:27
+  image: docker:28.0.4
   services:
-    - docker:27-dind
+    - name: docker:28.0.4-dind
+      alias: docker
+      command: ["dockerd", "--host=tcp://0.0.0.0:2375", "--host=unix:///var/run/docker.sock", "--tls=false"]
   variables:
-    DOCKER_HOST: tcp://docker:2376
-    DOCKER_TLS_CERTDIR: /certs
-    DOCKER_TLS_VERIFY: 1
-    DOCKER_CERT_PATH: /certs/client
+    DOCKER_HOST: tcp://docker:2375
+    DOCKER_TLS_CERTDIR: ""
+    DOCKER_BUILDKIT: "1"
   before_script:
     - apk add --no-cache nodejs npm
     - npm ci
