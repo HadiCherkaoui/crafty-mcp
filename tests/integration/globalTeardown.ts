@@ -4,7 +4,7 @@ import { existsSync, unlinkSync, rmSync } from "fs";
 const COMPOSE_FILE = "tests/docker-compose.test.yml";
 const SESSION_FILE = ".test-session.json";
 
-export default async function globalTeardown(): Promise<void> {
+export async function teardown(): Promise<void> {
   console.log("\n[integration] Stopping Crafty container...");
   execSync(`docker compose -f ${COMPOSE_FILE} down -v`, { stdio: "inherit" });
 
