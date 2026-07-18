@@ -12,7 +12,11 @@ export function registerServerConsoleTools(server: McpServer, client: CraftyClie
     },
     async ({ server_id, command }) => {
       try {
-        const data = await client.post(`/servers/${server_id}/stdin`, { command });
+        // Crafty's /stdin endpoint expects the console command as plain
+        // text, NOT JSON.  Using client.post() wraps the command in a
+        // JSON object that the server console can't parse.  postRaw()
+        // sends Content-Type: text/plain with the raw command string.
+        const data = await client.postRaw(`/servers/${server_id}/stdin`, command);
         return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
       } catch (error) {
         const msg = error instanceof Error ? error.message : String(error);
