@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: Hadi Cherkaoui <contact@hide.cherkaoui.ch>
+#
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 services:
   crafty:
     image: registry.gitlab.com/crafty-controller/crafty-4:latest

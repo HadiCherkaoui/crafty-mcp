@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Hadi Cherkaoui <contact@hide.cherkaoui.ch>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { CraftyClient } from "../../../src/client.js";

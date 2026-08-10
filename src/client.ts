@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: Hadi Cherkaoui <contact@hide.cherkaoui.ch>
+//
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 import { CraftyConfig, CraftyApiError, CraftyResponse } from "./types.js";
 
 export class CraftyClient {
