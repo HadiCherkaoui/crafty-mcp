@@ -21,10 +21,10 @@ test-unit:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
     expire_in: 1 week
-  only:
-    - main
-    - merge_requests
-    - tags
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_TAG
 
 # ── Integration tests (Docker-in-Docker) ──────────────────────────
 test-integration:
@@ -51,10 +51,10 @@ test-integration:
     paths:
       - tests/docker/logs/
     expire_in: 3 days
-  only:
-    - main
-    - merge_requests
-    - tags
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_TAG
   allow_failure: false
 
 # ── Build (TypeScript compile) ─────────────────────────────────────
@@ -68,17 +68,17 @@ build:
     paths:
       - dist/
     expire_in: 1 hour
-  only:
-    - main
-    - tags
-    - merge_requests
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_TAG
 
 # ── Publish to npm on tag ──────────────────────────────────────────
 publish:
   stage: publish
   image: node:20
-  only:
-    - tags
+  rules:
+    - if: $CI_COMMIT_TAG
   script:
     - echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
     - npm ci
