@@ -21,7 +21,7 @@
     "model-context-protocol"
   ],
   "author": "Hadi Cherkaoui",
-  "license": "GPL-3.0-only",
+  "license": "AGPL-3.0-or-later",
   "type": "module",
   "bin": {
     "crafty-mcp": "./dist/index.js"

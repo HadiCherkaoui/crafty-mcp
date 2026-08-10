@@ -240,4 +240,4 @@ npx @modelcontextprotocol/inspector node dist/index.js
 
 ## License
 
-GPLv3 — [Hadi Cherkaoui](https://github.com/HadiCherkaoui)
+AGPL-3.0-or-later — Copyright (C) 2026 [Hadi Cherkaoui](https://github.com/HadiCherkaoui). See [LICENSE](LICENSE).
