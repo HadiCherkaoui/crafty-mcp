@@ -37,14 +37,38 @@ function getConfig(): CraftyConfig {
   };
 }
 
+/**
+ * Canonical source for this build.
+ *
+ * AGPL-3.0-or-later section 13 obliges anyone who modifies and serves this to
+ * offer THEIR modified source; if you fork it, point this at your own repo.
+ */
+const SOURCE_URL = "https://gitlab.cherkaoui.ch/HadiCherkaoui/crafty-mcp";
+
 async function main(): Promise<void> {
   const config = getConfig();
   const client = new CraftyClient(config);
 
-  const server = new McpServer({
-    name: "crafty-mcp",
-    version: "0.1.0",
-  });
+  // Attribution rides on the handshake itself. `websiteUrl` is the SDK's own
+  // field for this, and `instructions` is surfaced by MCP clients, so the credit
+  // and the AGPL source offer reach anyone who connects — including someone
+  // running this server unmodified for others.
+  const server = new McpServer(
+    {
+      name: "crafty-mcp",
+      version: "0.1.0",
+      title: "Crafty Controller MCP",
+      websiteUrl: SOURCE_URL,
+    },
+    {
+      instructions:
+        `Tools for a Crafty Controller Minecraft host.
+
+` +
+        `crafty-mcp — Copyright (C) Hadi Cherkaoui — AGPL-3.0-or-later. ` +
+        `Source: ${SOURCE_URL}`,
+    },
+  );
 
   registerAuthTools(server, client);
   registerCraftyTools(server, client);
