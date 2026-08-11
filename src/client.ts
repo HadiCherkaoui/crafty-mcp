@@ -89,6 +89,59 @@ export class CraftyClient {
   }
 
   /**
+   * Send a raw (plain-text) body to the Crafty API.
+   *
+   * The /stdin endpoint expects the console command as a plain-text
+   * body with Content-Type: text/plain.  Using the normal post()
+   * method wraps the command in JSON, which the server console
+   * can't parse ("Unknown or incomplete command").
+   */
+  async postRaw<T = unknown>(path: string, rawBody: string): Promise<T> {
+    const url = `${this.baseUrl}/api/v2${path}`;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), this.timeout);
+
+    try {
+      const headers: Record<string, string> = {
+        "Content-Type": "text/plain",
+      };
+      if (this.token) {
+        headers["Authorization"] = `Bearer ${this.token}`;
+      }
+
+      const response = await fetch(url, {
+        method: "POST",
+        headers,
+        body: rawBody,
+        signal: controller.signal,
+      });
+
+      const json = (await response.json()) as Record<string, unknown>;
+
+      if (json["status"] === "error") {
+        throw new CraftyApiError(
+          response.status,
+          (json["error"] as string) || "UNKNOWN_ERROR",
+          json["error_data"] as string | undefined
+        );
+      }
+
+      const data = (json as unknown as CraftyResponse<T>).data;
+      return (data !== undefined ? data : json) as T;
+    } catch (error) {
+      if (error instanceof CraftyApiError) throw error;
+      if (error instanceof DOMException && error.name === "AbortError") {
+        throw new Error(
+          `Request to ${url} timed out after ${this.timeout}ms`
+        );
+      }
+      throw error;
+    } finally {
+      clearTimeout(timeoutId);
+    }
+  }
+
+  /**
    * Login does NOT send a bearer token — it authenticates and returns one.
    * Endpoint: POST /api/v2/auth/login (NOT /api/v2/login)
    */
