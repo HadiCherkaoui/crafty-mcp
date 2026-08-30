@@ -54,7 +54,13 @@ export class CraftyClient {
         );
       }
 
-      return (json as unknown as CraftyResponse<T>).data;
+      // Crafty API actions (start/stop/restart/delete/backup) return
+      // {"status":"ok"} with no "data" field.  Returning undefined here
+      // would cause JSON.stringify(undefined) → undefined (not a string),
+      // which violates the MCP content schema and crashes the transport.
+      // Fall back to the full envelope so callers always get a value.
+      const data = (json as unknown as CraftyResponse<T>).data;
+      return (data !== undefined ? data : json) as T;
     } catch (error) {
       if (error instanceof CraftyApiError) throw error;
       if (error instanceof DOMException && error.name === "AbortError") {

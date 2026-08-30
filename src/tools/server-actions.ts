@@ -10,11 +10,11 @@ const serverIdSchema = { server_id: z.string().describe("Server ID or UUID") };
 
 export function registerServerActionTools(server: McpServer, client: CraftyClient): void {
   const actions: Array<{ name: string; action: string; description: string }> = [
-    { name: "server_start", action: "start_server", description: "Start a Minecraft server" },
-    { name: "server_stop", action: "stop_server", description: "Stop a Minecraft server (sends configured stop command)" },
-    { name: "server_restart", action: "restart_server", description: "Restart a Minecraft server" },
-    { name: "server_kill", action: "kill_server", description: "Force-kill a Minecraft server process immediately" },
-    { name: "server_backup", action: "backup_server", description: "Trigger an immediate backup of a Minecraft server's files" },
+    { name: "server_start", action: "start", description: "Start a Minecraft server" },
+    { name: "server_stop", action: "stop", description: "Stop a Minecraft server (sends configured stop command)" },
+    { name: "server_restart", action: "restart", description: "Restart a Minecraft server" },
+    { name: "server_kill", action: "kill", description: "Force-kill a Minecraft server process immediately" },
+    { name: "server_backup", action: "backup", description: "Trigger an immediate backup of a Minecraft server's files" },
     { name: "server_update_executable", action: "update_executable", description: "Update the server jar/executable from the configured download URL" },
     { name: "server_clone", action: "clone_server", description: "Clone an existing Minecraft server (server must not be running)" },
   ];

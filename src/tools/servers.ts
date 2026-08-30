@@ -86,7 +86,17 @@ export function registerServerTools(server: McpServer, client: CraftyClient): vo
     },
     async (args) => {
       try {
-        const data = await client.post("/servers", args);
+        // Zod .default() injects optional fields (category, mem_min,
+        // mem_max, etc.) into args even when the caller omitted them.
+        // Crafty's strict JSON schema rejects unknown/extra properties.
+        // Round-trip through JSON to strip undefined values and empty
+        // optional parent objects that Crafty doesn't expect.
+        const cleanArgs = JSON.parse(
+          JSON.stringify(args, (_key, value) =>
+            value === undefined ? undefined : value
+          )
+        );
+        const data = await client.post("/servers", cleanArgs);
         return { content: [{ type: "text", text: JSON.stringify(data, null, 2) }] };
       } catch (error) {
         const msg = error instanceof Error ? error.message : String(error);
